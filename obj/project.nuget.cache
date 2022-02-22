@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CW4U/ocDaUTpAluAKysGxPrrJe+Z6W9RbG6/DXWl1iyHdPm+iMfZBu/oZCaokm7hQvbHyqgJSK373iVKQR4fSg==",
+  "dgSpecHash": "gQLMPIJoXHmLHvqZuzVwdn+9wbPJjy+wyQtbiROzz2tBtOQxXvLh591W+IHkujQMv7MBtcDX9vN137tELhpELA==",
   "success": true,
-  "projectFilePath": "C:\\_DiscoLocal\\GIT\\GitHub\\Docker_MVC\\mvc1.csproj",
+  "projectFilePath": "D:\\Git\\Docker_MVC\\mvc1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rodri\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\rodri\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

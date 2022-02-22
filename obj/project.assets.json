@@ -5428,11 +5428,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\_DiscoLocal\\GIT\\GitHub\\Docker_MVC\\mvc1.csproj",
+      "projectUniqueName": "D:\\Git\\Docker_MVC\\mvc1.csproj",
       "projectName": "mvc1",
-      "projectPath": "C:\\_DiscoLocal\\GIT\\GitHub\\Docker_MVC\\mvc1.csproj",
+      "projectPath": "D:\\Git\\Docker_MVC\\mvc1.csproj",
       "packagesPath": "C:\\Users\\rodri\\.nuget\\packages\\",
-      "outputPath": "C:\\_DiscoLocal\\GIT\\GitHub\\Docker_MVC\\obj\\",
+      "outputPath": "D:\\Git\\Docker_MVC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
@@ -5503,7 +5503,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

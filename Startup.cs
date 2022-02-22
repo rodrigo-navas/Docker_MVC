@@ -23,10 +23,10 @@ namespace mvc1
             var host = Configuration["DBHOST"] ?? "127.0.0.1";
             var port = Configuration["DBPORT"] ?? "3306";
             var user = Configuration["DBUSER"] ?? "root";
-            var password = Configuration["DBPASSWORD"] ?? "root";
+            var password = Configuration["DBPASSWORD"] ?? "navas";
 
             string connectionString = $"server={host};userid={user};pwd={password};"
-                    + $"port={port};database=navas";
+                    + $"port={port};database=produtosdb";
 
             services.AddDbContextPool<AppDbContext>(options =>
                 options.UseMySql(connectionString,
@@ -56,7 +56,7 @@ namespace mvc1
 
             app.UseAuthorization();
 
-            Populadb.IncluiDadosDB(app);
+            //Populadb.IncluiDadosDB(app);
 
             app.UseEndpoints(endpoints =>
             {
