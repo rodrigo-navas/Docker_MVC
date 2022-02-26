@@ -1,0 +1,76 @@
+-- Com Volume
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -d -v dadosdb:/var/lib/mysql mysql:8.0.20
+
+-- Sem Volume
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -d -e bind-address:0.0.0.0 mysql:8.0.20
+
+docker container run -d --name mysql --network=backend -e MYSQL_ROOT_PASSWORD=root -e bind-address=0.0.0.0 mysql:8.0.20
+
+
+-- Com Usuario diferente de root
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -d -e bind-address:0.0.0.0 mysql:8.0.20
+
+
+-- Quando é criado um container, o docker atribui endereço de IP para o container na rede, com esse comando é possivel recuperar o ip atribuido
+docker network inspect bridge
+
+-- Comando para gerar a imagem da aplicação MVC através do arquivo DockerFile
+docker build -t produtosmvc/app:2.0 .
+
+-- Comando para criar o container da aplicação MVC
+docker container run -d --name appmvc -p 3000:80 -e DBHOST=172.17.0.2 produtosmvc/app:2.0
+
+-- Comando para criar uma rede personalizada
+docker network create --driver bridge redenavas
+
+-- Comando para conectar o container em outra Rede que não foi criado
+docker network connect frontend mvcapp1
+
+-- Comando para criar o container na rede criada acima
+docker run --name mysql1 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=testdb -e MYSQL_USER=admin -e MYSQL_PASSWORD=root -d -e bind-address:0.0.0.0 --network redenavas mysql:8.0.20
+
+docker network inspect redenavas (Recuperar o ip da nova rede)
+
+docker container run -d --name appmvc1 -p 3000:80 -e DBHOST=172.18.0.2 --network redenavas produtosmvc/app:2.0
+docker container run -d --name appmvc1 -p 3000:80 -e DBHOST=mysql --network redenavas produtosmvc/app:2.0
+
+--Comando para criar o loadbalancer
+docker container run -d --name loadbalancer --network frontend -v "C:\_DiscoLocal\Curso Docker\Projetos\mvc1\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg" -p 3200:80 haproxy:1.7.0
+
+--Comando para criar os container que serão usados no loadbalancer
+docker container create --name appmvc1 -e DBHOST=mysql --network backend produtosmvc/app:2.0
+docker container create --name appmvc2 -e DBHOST=mysql --network backend produtosmvc/app:2.0
+docker container create --name appmvc3 -e DBHOST=mysql --network backend produtosmvc/app:2.0
+
+--Os container foram criados na rede backend, porem preciso conectar a frontend por causa do loadbalancer
+docker network connect frontend appmvc1
+docker network connect frontend appmvc2
+docker network connect frontend appmvc3
+
+Arquivo (haproxy.cfg)
+defaults
+        timeout connect 5000
+        timeout client  50000
+        timeout server  50000
+
+frontend localnodes
+        bind *:80
+        mode http
+        default_backend mvc
+
+backend mvc
+        mode http
+        balance roundrobin
+        server mvc1 appmvc1:80
+        server mvc2 appmvc2:80
+        server mvc3 appmvc3:80
+
+
+--Comando para dar build no docker-compose
+docker-compose -f docker-compose.yml build
+
+--Comando para executar o docker-compose
+docker-compose up
+
+--Comando para desfazer a operação
+docker-compose down
